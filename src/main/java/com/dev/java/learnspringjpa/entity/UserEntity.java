@@ -17,6 +17,6 @@ public class UserEntity {
     private Long role;
     private Date createdDate;
     private String createdBy;
-    private Date updateDate;
-    private String updateBy;
+    private Date updatedDate;
+    private String updatedBy;
 }
