@@ -1,22 +1,18 @@
 package com.dev.java.learnspringjpa.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import org.aspectj.weaver.IClassFileProvider;
+import jakarta.persistence.*;
 
-import java.util.Date;
+import java.util.List;
 
 @Entity(name = "USER")
-public class UserEntity {
-
-    @Id
-    private Long id;
+public class UserEntity extends BaseEntity {
     private String username;
     private String password;
     private Boolean isActived;
-    private Long role;
-    private Date createdDate;
-    private String createdBy;
-    private Date updatedDate;
-    private String updatedBy;
+    @ManyToMany
+    @JoinTable(name = "User_Roles",
+            joinColumns = @JoinColumn(name = "user"),
+            inverseJoinColumns = @JoinColumn(name = "role"))
+    private List<RoleEntity> roles;
 }
+
