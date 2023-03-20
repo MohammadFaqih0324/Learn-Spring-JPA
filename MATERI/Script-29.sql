@@ -192,4 +192,3 @@ JOIN major m ON s.major = m.id
 JOIN address a ON s.address = a.id;
 
 
-
