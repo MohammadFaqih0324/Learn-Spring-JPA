@@ -5,10 +5,10 @@ import jakarta.persistence.ManyToMany;
 
 import java.util.List;
 
-@Entity(name = "ROLE")
-public class RoleEntity extends BaseEntity{
+@Entity(name = "COURSE")
+public class CourseEntity extends BaseEntity{
     private String name;
     private Boolean isActived;
-    @ManyToMany(mappedBy = "roles")
-    private List<UserEntity> users;
+    @ManyToMany(mappedBy = "courses")
+    private List<StudentEntity> students;
 }

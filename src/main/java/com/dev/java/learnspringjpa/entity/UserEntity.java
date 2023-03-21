@@ -15,4 +15,3 @@ public class UserEntity extends BaseEntity {
             inverseJoinColumns = @JoinColumn(name = "role"))
     private List<RoleEntity> roles;
 }
-

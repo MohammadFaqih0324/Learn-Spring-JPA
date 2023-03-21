@@ -1,12 +1,11 @@
 package com.dev.java.learnspringjpa.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.*;
+
+import java.util.List;
 
 @Entity(name = "STUDENT")
-public class StudentEntity extends BaseEntity{
+public class StudentEntity extends BaseEntity {
     private String name;
     private int age;
     @ManyToOne
@@ -16,4 +15,10 @@ public class StudentEntity extends BaseEntity{
     @OneToOne
     @JoinColumn(name = "ADDRESS")
     private AddressEntity address;
+
+    @ManyToMany
+    @JoinTable(name = "enrollment",
+            joinColumns = @JoinColumn(name = "student"),
+            inverseJoinColumns = @JoinColumn(name = "course"))
+    private List<CourseEntity> courses;
 }
