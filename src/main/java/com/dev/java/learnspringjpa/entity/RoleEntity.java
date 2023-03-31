@@ -1,14 +1,24 @@
 package com.dev.java.learnspringjpa.entity;
 
 import jakarta.persistence.Entity;
-import jakarta.persistence.ManyToMany;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import lombok.Data;
 
-import java.util.List;
-
+@Data
 @Entity(name = "ROLE")
 public class RoleEntity extends BaseEntity{
     private String name;
     private Boolean isActived;
-    @ManyToMany(mappedBy = "roles")
-    private List<UserEntity> users;
+    public RoleEntity(){
+    }
+
+    public RoleEntity(String name, Boolean isActived) {
+        this.name = name;
+        this.isActived = isActived;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "USER")
+    private UserEntity user;
 }

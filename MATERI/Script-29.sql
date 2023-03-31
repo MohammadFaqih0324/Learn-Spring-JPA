@@ -107,8 +107,6 @@ constraint FK_Role foreign key (`role`) references `role`(id)
 );
 
 
-
-
 -- DML INSERT --
 
 -- insert into table `major` 
@@ -137,7 +135,7 @@ VALUES
  (4, 'Nabhan', 20, 3, 4, '2022-01-01', 'Systems', '2022-01-01', 'Systems');      
 
 
--- insert into table `lesson` 
+-- insert into table `lesson`
 INSERT INTO lesson (id, name, is_actived, major, created_date, created_by, updated_date, updated_by)
 VALUES 
        (1, 'Introduction to Programming', true, 1, '2022-01-01', 'Admin', '2022-01-01', 'Admin'),
@@ -154,7 +152,7 @@ VALUES
        (12, 'Framework : Spring and JPA', true, 3, '2022-01-01', 'Admin', '2022-01-01', 'Admin'),
        (13, 'Framework : Springboot and Spring Security', true, 3, '2022-01-01', 'Admin', '2022-01-01', 'Admin'),
        (14, 'Basic : Html, Css and Javascript', true, 3, '2022-01-01', 'Admin', '2022-01-01', 'Admin'),
-       (15, 'Framework : ReactJS', true, 3, '2022-01-01', 'Admin', '2022-01-01', 'Admin'),
+       (15, 'c', true, 3, '2022-01-01', 'Admin', '2022-01-01', 'Admin'),
        (16, 'Final Project', true, 3, '2022-01-01', 'Admin', '2022-01-01', 'Admin'),
 
 -- insert into table `user` 
@@ -164,7 +162,6 @@ VALUES
 (2, 'jane_smith', 'password456', true, '2022-01-01', 'admin', '2022-01-01', 'admin'),
 (3, 'bob_johnson', 'password789', true, '2022-01-01', 'admin', '2022-01-01', 'admin');
 
-
 -- insert into table `role` 
 INSERT INTO `role` (id, name, is_actived, created_date, created_by, updated_date, updated_by)
 VALUES 
@@ -172,9 +169,9 @@ VALUES
 (2, 'USER', true, '2022-01-01', 'admin', '2022-01-01', 'admin'),
 (3, 'GUEST', true, '2022-01-01', 'admin', '2022-01-01', 'admin');
 
--- insert into table `user_roles` 
+-- insert into table `user_roles`
 INSERT INTO `user_roles` (id, `user`, `role`, created_date, created_by, updated_date, updated_by)
-VALUES 
+VALUES
 (1, 1, 1, '2022-01-01', 'admin', '2022-01-01', 'admin'),
 (2, 1, 2, '2022-01-01', 'admin', '2022-01-01', 'admin'),
 (3, 2, 2, '2022-01-01', 'admin', '2022-01-01', 'admin'),

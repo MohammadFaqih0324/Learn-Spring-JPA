@@ -1,18 +1,17 @@
 package com.dev.java.learnspringjpa.entity;
 
 import jakarta.persistence.Entity;
-import jakarta.persistence.OneToMany;
+import lombok.Data;
 
-import java.util.List;
-import java.util.Set;
-
+@Data
 @Entity(name = "MAJOR")
 public class MajorEntity extends BaseEntity{
     private String name;
     private Boolean isActived;
-    @OneToMany(mappedBy = "major")
-    private Set<LessonEntity> lesson;
-
-    @OneToMany(mappedBy = "major")
-    private List<StudentEntity> student;
+    public MajorEntity(){
+    }
+    public MajorEntity(String name, Boolean isActived){
+        this.name = name;
+        this.isActived = isActived;
+    }
 }
