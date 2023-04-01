@@ -1,8 +1,6 @@
 package com.dev.java.learnspringjpa.entity;
 
 import jakarta.persistence.Entity;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 import lombok.Data;
 
 @Data
@@ -17,8 +15,4 @@ public class RoleEntity extends BaseEntity{
         this.name = name;
         this.isActived = isActived;
     }
-
-    @ManyToOne
-    @JoinColumn(name = "USER")
-    private UserEntity user;
 }
