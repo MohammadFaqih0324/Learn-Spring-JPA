@@ -145,7 +145,7 @@ VALUES
        (5, 'Framework : Springboot and Spring Security', true, 1, '2022-01-01', 'Admin', '2022-01-01', 'Admin'),
        (6, 'Basic : Html, Css and Javascript', true, 2, '2022-01-01', 'Admin', '2022-01-01', 'Admin'),
        (7, 'Framework : ReactJS', true, 2, '2022-01-01', 'Admin', '2022-01-01', 'Admin'),
-       (8, 'Final Project', true, 2, '2022-01-01', 'Admin', '2022-01-01', 'Admin'),
+       (8, 'Final Project Phase 1', true, 2, '2022-01-01', 'Admin', '2022-01-01', 'Admin'),
        (9, 'Introduction to Programming', true, 3, '2022-01-01', 'Admin', '2022-01-01', 'Admin'),
        (10, 'Basic Java', true, 1, '2022-01-01', 'Admin', '2022-01-01', 'Admin'),
        (11, 'Java Build Automation : Maven', true, 3, '2022-01-01', 'Admin', '2022-01-01', 'Admin'),
@@ -153,7 +153,7 @@ VALUES
        (13, 'Framework : Springboot and Spring Security', true, 3, '2022-01-01', 'Admin', '2022-01-01', 'Admin'),
        (14, 'Basic : Html, Css and Javascript', true, 3, '2022-01-01', 'Admin', '2022-01-01', 'Admin'),
        (15, 'c', true, 3, '2022-01-01', 'Admin', '2022-01-01', 'Admin'),
-       (16, 'Final Project', true, 3, '2022-01-01', 'Admin', '2022-01-01', 'Admin'),
+       (16, 'Final Project Phase 2', true, 3, '2022-01-01', 'Admin', '2022-01-01', 'Admin'),
 
 -- insert into table `user` 
 INSERT INTO `user` (id, username, `password`, is_actived, created_date, created_by, updated_date, updated_by)

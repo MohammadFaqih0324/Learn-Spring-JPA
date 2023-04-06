@@ -2,22 +2,20 @@ package com.dev.java.learnspringjpa.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
-
 import java.util.List;
 
 @Data
 @Entity(name = "USER")
 public class UserEntity extends BaseEntity {
-
-    private String username;
+    private String userName;
     private String password;
     private Boolean isActived;
 
     public UserEntity(){
     }
 
-    public UserEntity(String username, String password, Boolean isActived, List<RoleEntity> roles) {
-        this.username = username;
+    public UserEntity(String userName, String password, Boolean isActived, List<RoleEntity> roles) {
+        this.userName = userName;
         this.password = password;
         this.isActived = isActived;
         this.roles = roles;

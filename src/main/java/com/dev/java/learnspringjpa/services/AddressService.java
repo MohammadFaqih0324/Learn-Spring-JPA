@@ -5,6 +5,9 @@ import com.dev.java.learnspringjpa.repository.AddressRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.Optional;
+
 @Service
 public class AddressService {
     @Autowired
@@ -14,5 +17,37 @@ public class AddressService {
         AddressEntity addressEntity = new AddressEntity(address);
         AddressEntity response =  repository.save(addressEntity);
         return response;
+    }
+
+    public List<AddressEntity> getAll(){
+        List<AddressEntity> datas;
+        datas = repository.findAll();
+        return datas;
+    }
+
+    public AddressEntity getById(Long id){
+        AddressEntity data = new AddressEntity();
+        try{
+            Optional<AddressEntity> optional = repository.findById(id);
+            if (optional.isPresent()){
+                data = optional.get();
+            }
+        }catch (Exception e){
+            System.out.println("failed get data AddressEntity by id with error : " + e.getMessage());
+        }
+        return data;
+    }
+
+    public AddressEntity getByAddress(String address){
+        AddressEntity data = new AddressEntity();
+        try{
+            Optional<AddressEntity> optional = repository.findByAddress(address);
+            if (optional.isPresent()){
+                data = optional.get();
+            }
+        }catch (Exception e){
+            System.out.println("failed get data AddressEntity by address with error : " + e.getMessage());
+        }
+        return data;
     }
 }
