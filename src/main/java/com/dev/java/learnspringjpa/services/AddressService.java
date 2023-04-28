@@ -1,6 +1,7 @@
 package com.dev.java.learnspringjpa.services;
 
 import com.dev.java.learnspringjpa.entity.AddressEntity;
+import com.dev.java.learnspringjpa.entity.StudentEntity;
 import com.dev.java.learnspringjpa.repository.AddressRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -47,6 +48,37 @@ public class AddressService {
             }
         }catch (Exception e){
             System.out.println("failed get data AddressEntity by address with error : " + e.getMessage());
+        }
+        return data;
+    }
+
+    public AddressEntity update(Long id, AddressEntity addressEntity){
+        AddressEntity data = new AddressEntity();
+        try {
+            AddressEntity dataFromDb = this.getById(id);
+            if (dataFromDb.getId() != null) {
+                dataFromDb.setUpdatedBy(addressEntity.getUpdatedBy());
+                dataFromDb.setAddress(addressEntity.getAddress());
+                data = repository.save(dataFromDb);
+            }
+        }catch (Exception e) {
+            System.out.println("failed get data AddressEntity by name with error : " + e);
+        }
+        return data;
+    }
+
+    public AddressEntity delete(Long id){
+        AddressEntity data = new AddressEntity();
+        try {
+            AddressEntity dataFromDb = this.getById(id);
+            if(dataFromDb.getId() != null){
+                repository.delete(dataFromDb);
+                data = dataFromDb;
+            }else {
+                System.out.println("failed delete data address, id address " + id + " is not found");
+            }
+        } catch (Exception e){
+            System.out.println("failed get data AddressEntity by name with error : " + e);
         }
         return data;
     }

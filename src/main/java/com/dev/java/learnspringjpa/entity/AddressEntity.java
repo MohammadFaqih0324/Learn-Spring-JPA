@@ -11,4 +11,8 @@ public class AddressEntity extends BaseEntity{
     public AddressEntity(String address){
         this.address = address;
     }
+
+    public String toString(){
+        return "id = " + this.getId() + " name = " + this.getAddress();
+    }
 }

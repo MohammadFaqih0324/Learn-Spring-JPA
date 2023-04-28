@@ -2,6 +2,7 @@ package com.dev.java.learnspringjpa.services;
 
 import com.dev.java.learnspringjpa.entity.LessonEntity;
 import com.dev.java.learnspringjpa.entity.MajorEntity;
+import com.dev.java.learnspringjpa.entity.RoleEntity;
 import com.dev.java.learnspringjpa.repository.LessonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -47,6 +48,39 @@ public class LessonService {
         }catch (Exception e){
             System.out.println("failed get data LessonEntity by name with error : " + e.getMessage());
             e.printStackTrace();
+        }
+        return data;
+    }
+
+    public LessonEntity update(Long id, LessonEntity lessonEntity){
+        LessonEntity data = new LessonEntity();
+        try {
+            LessonEntity dataFromDb = this.getById(id);
+            if (dataFromDb.getId() != null){
+                dataFromDb.setUpdatedBy(lessonEntity.getUpdatedBy());
+                dataFromDb.setName(lessonEntity.getName());
+                dataFromDb.setIsActived(lessonEntity.getIsActived());
+                dataFromDb.setMajor(lessonEntity.getMajor());
+                data = repository.save(dataFromDb);
+            }
+        }catch (Exception e){
+            System.out.println("failed get data LessonEntity by name with error : " + e);
+        }
+        return  data;
+    }
+
+    public LessonEntity delete(Long id){
+        LessonEntity data = new LessonEntity();
+        try {
+            LessonEntity dataFromDb = this.getById(id);
+            if(dataFromDb.getId() != null){
+                repository.delete(dataFromDb);
+                data = dataFromDb;
+            }else {
+                System.out.println("failed delete data lesson, id lesson " + id + " is not found");
+            }
+        } catch (Exception e){
+            System.out.println("failed get data LessonEntity by name with error : " + e);
         }
         return data;
     }

@@ -10,6 +10,11 @@ public class UserEntity extends BaseEntity {
     private String userName;
     private String password;
     private Boolean isActived;
+    @ManyToMany
+    @JoinTable(name = "User_Roles",
+            joinColumns = @JoinColumn(name = "user"),
+            inverseJoinColumns = @JoinColumn(name = "role"))
+    private List<RoleEntity> roles;
 
     public UserEntity(){
     }
@@ -21,9 +26,7 @@ public class UserEntity extends BaseEntity {
         this.roles = roles;
     }
 
-    @ManyToMany
-    @JoinTable(name = "User_Roles",
-            joinColumns = @JoinColumn(name = "user"),
-            inverseJoinColumns = @JoinColumn(name = "role"))
-    private List<RoleEntity> roles;
+    public String toString(){
+        return "id = " + this.getId() + " name = " + this.getUserName();
+    }
 }

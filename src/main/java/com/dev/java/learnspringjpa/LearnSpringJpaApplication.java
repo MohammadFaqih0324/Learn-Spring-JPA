@@ -201,5 +201,91 @@ public class LearnSpringJpaApplication {
         UserEntity getByUserName = userService.getByUserName("Jhon Doe");
         System.out.println("ini hasil dari getByName with id = " + getByUserName.getId() + " username = " + getByUserName.getUserName());
 
+        // STUDENT
+
+        // UPDATE DATA BY ID
+        StudentEntity dataUpdateStudent = new StudentEntity("Fifi Alfiani", 25, majorService.getById(2L), address3, List.of(course1, course2));
+        dataUpdateStudent.setUpdatedBy("Jafar");
+        StudentEntity studentUpdate = studentService.update(1L, dataUpdateStudent);
+        System.out.println(studentUpdate.toString() + " Has been update");
+
+        // DELETE DATA BY ID
+        StudentEntity deleteStudent = studentService.delete(150L);
+        System.out.println(deleteStudent.getId() + " telah dihapus");
+
+
+        // ADDRESS
+
+        // UPDATE DATA BY ID
+        AddressEntity dataUpdateAddress = new AddressEntity("Subang");
+        dataUpdateAddress.setUpdatedBy("Faqih");
+        AddressEntity addressUpdate = addressService.update(1L, dataUpdateAddress);
+        System.out.println(addressUpdate.toString() + " Has been update");
+
+        // DELETE DATA BY ID
+        AddressEntity deleteAddress = addressService.delete(10L);
+        System.out.println(deleteAddress.getId() + " telah dihapus");
+
+        // MAJOR
+
+        // UPDATE DATA BY ID
+        MajorEntity dataUpdateMajor = new MajorEntity("Backend Developer", false);
+        dataUpdateMajor.setUpdatedBy("Faqih");
+        MajorEntity majorUpdate = majorService.update(100L, dataUpdateMajor);
+        System.out.println(majorUpdate.toString() + " Has been update");
+
+        // DELETE DATA BY ID
+        MajorEntity deleteMajor = majorService.delete(9L);
+        System.out.println(deleteMajor.getId() + " telah dihapus");
+
+
+        // COURSE
+
+        // UPDATE DATA BY ID
+        CourseEntity dataUpdateCourse = new CourseEntity("Fullstack Developer", false);
+        dataUpdateCourse.setUpdatedBy("Faqih");
+        CourseEntity courseUpdate = courseService.update(1L, dataUpdateCourse);
+        System.out.println(courseUpdate.toString() + " Has been update");
+
+        // DELETE DATA BY ID
+        CourseEntity deleteCourse = courseService.delete(5L);
+        System.out.println(deleteCourse.getId() + " telah dihapus");
+
+        // ROLE
+
+        // UPDATE DATA BY ID
+        RoleEntity dataUpdateRole = new RoleEntity("GUEST", false);
+        dataUpdateRole.setUpdatedBy("Faqih");
+        RoleEntity roleUpdate = roleService.update(1L, dataUpdateRole);
+        System.out.println(roleUpdate.toString() + " Has been update");
+
+        // DELETE DATA BY ID
+        RoleEntity deleteRole = roleService.delete(5L);
+        System.out.println(deleteRole.getId() + " telah dihapus");
+
+        // LESSON
+
+        // UPDATE DATA BY ID
+        LessonEntity dataUpdateLesson = new LessonEntity("Springboot JPA", false, majorService.getById(2L));
+        dataUpdateLesson.setUpdatedBy("Faqih");
+        LessonEntity lessonUpdate = lessonService.update(5L, dataUpdateLesson);
+        System.out.println(lessonUpdate.toString() + " Has been update");
+
+        // DELETE DATA BY ID
+        LessonEntity deleteLesson = lessonService.delete(100L);
+        System.out.println(deleteLesson.getId() + " telah dihapus");
+
+        // USER
+
+        // UPDATE DATA BY ID
+        UserEntity dataUpdateUser = new UserEntity("SemiSimon", "Password987", true, roleService.getAll());
+        dataUpdateUser.setUpdatedBy("Faqih");
+        UserEntity userUpdate = userService.update(6L, dataUpdateUser);
+        System.out.println(userUpdate.toString() + " Has been update");
+
+        // DELETE DATA BY ID
+        UserEntity deleteUser = userService.delete(450L);
+        System.out.println(deleteUser.getId() + " telah dihapus");
+
     }
 }

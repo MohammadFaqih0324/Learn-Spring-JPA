@@ -9,17 +9,6 @@ import java.util.List;
 public class StudentEntity extends BaseEntity {
     private String name;
     private int age;
-
-    public StudentEntity(){
-    }
-
-    public StudentEntity(String name, int age, MajorEntity major, AddressEntity address, List<CourseEntity> courses) {
-        this.name = name;
-        this.age = age;
-        this.major = major;
-        this.address = address;
-        this.courses = courses;
-    }
     @ManyToOne
     @JoinColumn(name = "MAJOR")
     private MajorEntity major;
@@ -32,4 +21,18 @@ public class StudentEntity extends BaseEntity {
             inverseJoinColumns = @JoinColumn(name = "course"))
     private List<CourseEntity> courses;
 
+    public StudentEntity(){
+    }
+
+    public StudentEntity(String name, int age, MajorEntity major, AddressEntity address, List<CourseEntity> courses) {
+        this.name = name;
+        this.age = age;
+        this.major = major;
+        this.address = address;
+        this.courses = courses;
+    }
+
+    public String toString(){
+        return "id = " + this.getId() + " name = " + this.getName();
+    }
 }

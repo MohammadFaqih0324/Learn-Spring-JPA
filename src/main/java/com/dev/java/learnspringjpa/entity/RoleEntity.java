@@ -15,4 +15,8 @@ public class RoleEntity extends BaseEntity{
         this.name = name;
         this.isActived = isActived;
     }
+
+    public String toString(){
+        return "id = " + this.getId() + " name = " + this.getName();
+    }
 }

@@ -10,6 +10,10 @@ import lombok.Data;
 public class LessonEntity extends BaseEntity{
     private String name;
     private Boolean isActived;
+    @ManyToOne
+    @JoinColumn(name = "MAJOR")
+    private MajorEntity major;
+
     public LessonEntity(){
     }
 
@@ -19,7 +23,7 @@ public class LessonEntity extends BaseEntity{
         this.major = major;
     }
 
-    @ManyToOne
-    @JoinColumn(name = "MAJOR")
-    private MajorEntity major;
+    public String toString(){
+        return "id = " + this.getId() + " name = " + this.getName();
+    }
 }

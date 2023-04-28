@@ -1,5 +1,6 @@
 package com.dev.java.learnspringjpa.services;
 
+import com.dev.java.learnspringjpa.entity.CourseEntity;
 import com.dev.java.learnspringjpa.entity.MajorEntity;
 import com.dev.java.learnspringjpa.entity.RoleEntity;
 import com.dev.java.learnspringjpa.repository.RoleRepository;
@@ -48,6 +49,37 @@ public class RoleService {
             }
         }catch (Exception e){
             System.out.println("failed get data MajorEntity by id with error : " + e.getMessage());
+        }
+        return data;
+    }
+
+    public RoleEntity update(Long id, RoleEntity roleEntity){
+        RoleEntity data = new RoleEntity();
+        try {
+            RoleEntity dataFromDb = this.getById(id);
+            if (dataFromDb.getId() != null){
+                dataFromDb.setUpdatedBy(roleEntity.getUpdatedBy());
+                dataFromDb.setName(roleEntity.getName());
+                dataFromDb.setIsActived(roleEntity.getIsActived());
+            }
+        }catch (Exception e){
+            System.out.println("failed get data RoleEntity by name with error : " + e);
+        }
+        return data;
+    }
+
+    public RoleEntity delete(Long id){
+        RoleEntity data = new RoleEntity();
+        try {
+            RoleEntity dataFromDb = this.getById(id);
+            if(dataFromDb.getId() != null){
+                repository.delete(dataFromDb);
+                data = dataFromDb;
+            }else {
+                System.out.println("failed delete data role, id role " + id + " is not found");
+            }
+        } catch (Exception e){
+            System.out.println("failed get data RoleEntity by name with error : " + e);
         }
         return data;
     }

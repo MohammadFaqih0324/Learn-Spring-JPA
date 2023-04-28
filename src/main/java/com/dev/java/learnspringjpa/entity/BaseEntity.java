@@ -15,11 +15,18 @@ public class BaseEntity {
     private String createdBy;
     private Date updatedDate;
     private String updatedBy;
+
+    /**
+     * @PrePersist : dijalankan sebelum proses save data ke database
+     */
     @PrePersist
     private void beforeSave(){
         this.createdDate = new Date();
         this.createdBy = "Admin";
+
+    }
+    @PreUpdate
+    private void beforeUpdate(){
         this.updatedDate = new Date();
-        this.updatedBy = "Admin";
     }
 }

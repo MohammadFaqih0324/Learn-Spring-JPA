@@ -1,5 +1,6 @@
 package com.dev.java.learnspringjpa.services;
 
+import com.dev.java.learnspringjpa.entity.AddressEntity;
 import com.dev.java.learnspringjpa.entity.MajorEntity;
 import com.dev.java.learnspringjpa.repository.MajorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,6 +48,37 @@ public class MajorService {
             }
         }catch (Exception e){
             System.out.println("failed get data MajorEntity by name with error : " + e.getMessage());
+        }
+        return data;
+    }
+
+    public MajorEntity update(Long id, MajorEntity majorEntity){
+        MajorEntity data = new MajorEntity();
+        try {
+            MajorEntity dataFromDb = this.getById(id);
+            if (dataFromDb.getId() != null){
+                dataFromDb.setUpdatedBy(majorEntity.getUpdatedBy());
+                dataFromDb.setName(majorEntity.getName());
+                dataFromDb.setIsActived(majorEntity.getIsActived());
+            }
+        }catch (Exception e){
+            System.out.println("failed get data MajorEntity by name with error : " + e);
+        }
+        return data;
+    }
+
+    public MajorEntity delete(Long id){
+        MajorEntity data = new MajorEntity();
+        try {
+            MajorEntity dataFromDb = this.getById(id);
+            if(dataFromDb.getId() != null){
+                repository.delete(dataFromDb);
+                data = dataFromDb;
+            }else {
+                System.out.println("failed delete data major, id major " + id + " is not found");
+            }
+        } catch (Exception e){
+            System.out.println("failed get data MajorEntity by name with error : " + e);
         }
         return data;
     }

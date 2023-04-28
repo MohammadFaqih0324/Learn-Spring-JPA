@@ -52,4 +52,38 @@ public class StudentService {
         }
         return data;
     }
+
+    public StudentEntity update(Long id, StudentEntity studentEntity) {
+        StudentEntity data = new StudentEntity();
+        try {
+            StudentEntity dataFromDb = this.getById(id);
+            if (dataFromDb.getId() != null) {
+                dataFromDb.setUpdatedBy(studentEntity.getUpdatedBy());
+                dataFromDb.setAge(studentEntity.getAge());
+                dataFromDb.setName(studentEntity.getName());
+                dataFromDb.setAddress(studentEntity.getAddress());
+                dataFromDb.setMajor(studentEntity.getMajor());
+                data = repository.save(dataFromDb);
+            }
+        } catch (Exception e) {
+            System.out.println("failed get data StudentEntity by name with error : " + e);
+        }
+        return data;
+    }
+
+    public StudentEntity delete(Long id){
+        StudentEntity data = new StudentEntity();
+        try {
+            StudentEntity dataFromDb = this.getById(id);
+            if(dataFromDb.getId() != null){
+                repository.delete(dataFromDb);
+                data = dataFromDb;
+            }else {
+                System.out.println("failed delete data student, id student " + id + " is not found");
+            }
+        } catch (Exception e){
+            System.out.println("failed get data StudentEntity by name with error : " + e);
+        }
+        return data;
+    }
 }
