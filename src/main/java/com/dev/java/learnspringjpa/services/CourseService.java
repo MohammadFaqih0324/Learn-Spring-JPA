@@ -60,6 +60,7 @@ public class CourseService {
                 dataFromDb.setUpdatedBy(courseEntity.getUpdatedBy());
                 dataFromDb.setName(courseEntity.getName());
                 dataFromDb.setIsActived(courseEntity.getIsActived());
+                data = repository.save(dataFromDb);
             }
         }catch (Exception e){
             System.out.println("failed get data CourseEntity by name with error : " + e);

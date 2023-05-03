@@ -61,6 +61,7 @@ public class RoleService {
                 dataFromDb.setUpdatedBy(roleEntity.getUpdatedBy());
                 dataFromDb.setName(roleEntity.getName());
                 dataFromDb.setIsActived(roleEntity.getIsActived());
+                data = repository.save(dataFromDb);
             }
         }catch (Exception e){
             System.out.println("failed get data RoleEntity by name with error : " + e);

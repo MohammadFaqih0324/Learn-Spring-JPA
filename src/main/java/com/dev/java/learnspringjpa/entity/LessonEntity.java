@@ -24,6 +24,6 @@ public class LessonEntity extends BaseEntity{
     }
 
     public String toString(){
-        return "id = " + this.getId() + " name = " + this.getName();
+        return "id = " + this.getId() + "  name = " + this.getName();
     }
 }

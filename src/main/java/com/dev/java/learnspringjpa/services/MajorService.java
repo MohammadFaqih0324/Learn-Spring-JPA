@@ -60,6 +60,7 @@ public class MajorService {
                 dataFromDb.setUpdatedBy(majorEntity.getUpdatedBy());
                 dataFromDb.setName(majorEntity.getName());
                 dataFromDb.setIsActived(majorEntity.getIsActived());
+                data = repository.save(dataFromDb);
             }
         }catch (Exception e){
             System.out.println("failed get data MajorEntity by name with error : " + e);
