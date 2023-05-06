@@ -1,7 +1,8 @@
 package com.dev.java.learnspringjpa.services;
 
 import com.dev.java.learnspringjpa.entity.CourseEntity;
-import com.dev.java.learnspringjpa.entity.MajorEntity;
+import com.dev.java.learnspringjpa.model.request.CourseSaveRequest;
+import com.dev.java.learnspringjpa.model.response.GeneralResponse;
 import com.dev.java.learnspringjpa.repository.CourseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,15 +15,24 @@ public class CourseService {
     @Autowired
     private CourseRepository repository;
 
-    public CourseEntity save(String name, Boolean isActived) {
-        CourseEntity courseEntity = new CourseEntity(name, isActived);
-        CourseEntity response = repository.save(courseEntity);
-        return response;
+    public GeneralResponse<Object> save(CourseSaveRequest request){
+        try {
+            CourseEntity course = new CourseEntity(request.getName(), request.getIsActived());
+            repository.save(course);
+            return new GeneralResponse<>(200, "Success", "Success save course", course);
+        }catch (Exception e){
+            System.out.println("failed save major with error " + e);
+            return new GeneralResponse<>(300, "Failed", e.getMessage(), null);
+        }
     }
 
     public List<CourseEntity> getAll(){
-        List<CourseEntity> datas;
-        datas = repository.findAll();
+        List<CourseEntity> datas = null;
+        try{
+            datas = repository.findAll();
+        }catch (Exception e){
+            System.out.println("failed get data CourseEntity by id with error : " + e.getMessage());
+        }
         return datas;
     }
 

@@ -1,13 +1,11 @@
 package com.dev.java.learnspringjpa.controller;
 
 import com.dev.java.learnspringjpa.entity.AddressEntity;
-import com.dev.java.learnspringjpa.model.AddressSaveRequest;
+import com.dev.java.learnspringjpa.model.request.AddressSaveRequest;
+import com.dev.java.learnspringjpa.model.response.GeneralResponse;
 import com.dev.java.learnspringjpa.services.AddressService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -18,12 +16,14 @@ public class AddressController {
     private AddressService addressService;
 
     @GetMapping("/get-all")
-    public List<AddressEntity> getAll(){
-        return addressService.getAll();
+    public GeneralResponse getAll(){
+        List<AddressEntity> datas = addressService.getAll();
+        return new GeneralResponse(200, "Success", "Success get data address", datas);
     }
 
     @PostMapping("/save")
-    public void save(AddressSaveRequest request){
-        addressService.save(request.getAddress());
+    public GeneralResponse save(@RequestBody AddressSaveRequest request){
+        GeneralResponse response = addressService.save(request);
+        return response;
     }
 }

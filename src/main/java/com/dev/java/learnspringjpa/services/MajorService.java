@@ -1,7 +1,8 @@
 package com.dev.java.learnspringjpa.services;
 
-import com.dev.java.learnspringjpa.entity.AddressEntity;
 import com.dev.java.learnspringjpa.entity.MajorEntity;
+import com.dev.java.learnspringjpa.model.request.MajorSaveRequest;
+import com.dev.java.learnspringjpa.model.response.GeneralResponse;
 import com.dev.java.learnspringjpa.repository.MajorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,15 +15,24 @@ public class MajorService {
     @Autowired
     private MajorRepository repository;
 
-    public MajorEntity save(String name, Boolean isActived){
-        MajorEntity major = new MajorEntity(name, isActived);
-        MajorEntity response = repository.save(major);
-        return response;
+    public GeneralResponse<Object> save(MajorSaveRequest request){
+        try {
+            MajorEntity major = new MajorEntity(request.getName(), request.getIsActived());
+            repository.save(major);
+            return new GeneralResponse<>(200, "Success", "Success save major", major);
+        }catch (Exception e){
+            System.out.println("failed save major with error " + e);
+            return new GeneralResponse<>(300, "Failed", e.getMessage(), null);
+        }
     }
 
     public List<MajorEntity> getAll(){
-        List<MajorEntity> datas;
-        datas = repository.findAll();
+        List<MajorEntity> datas = null;
+        try {
+            datas = repository.findAll();
+        }catch (Exception e){
+            System.out.println("failed get data MajorEntity by id with error : " + e.getMessage());
+        }
         return datas;
     }
 

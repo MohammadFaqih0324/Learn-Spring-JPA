@@ -1,11 +1,13 @@
 package com.dev.java.learnspringjpa.services;
 
-import com.dev.java.learnspringjpa.entity.LessonEntity;
-import com.dev.java.learnspringjpa.entity.RoleEntity;
-import com.dev.java.learnspringjpa.entity.UserEntity;
+import com.dev.java.learnspringjpa.entity.*;
+import com.dev.java.learnspringjpa.model.request.UserSaveRequest;
+import com.dev.java.learnspringjpa.model.response.GeneralResponse;
 import com.dev.java.learnspringjpa.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -13,16 +15,36 @@ import java.util.Optional;
 public class UserService {
     @Autowired
     private UserRepository repository;
+    @Autowired
+    private RoleService roleService;
 
-    public UserEntity save(String username, String password, Boolean isActived, List<RoleEntity> roles){
-        UserEntity user = new UserEntity(username, password, isActived, roles);
-        UserEntity response = repository.save(user);
-        return response;
+    public GeneralResponse<Object> save(UserSaveRequest request){
+        List<RoleEntity> roleEntities = new ArrayList<>();
+        try {
+            for (Long roleId : request.getRole()) {
+                RoleEntity role = roleService.getById(roleId);
+                if (role.getId() == null){
+                    return new GeneralResponse<>(100, "Failed", "Failed save user, user not found", null);
+                }
+                roleEntities.add(role);
+            }
+
+            UserEntity user = new UserEntity(request.getUserName(), request.getPassword(), request.getIsActived(), roleEntities);
+            repository.save(user);
+            return new GeneralResponse<>(200, "Success", "Success save user", user);
+        }catch (Exception e){
+            System.out.println("failed save user with error " + e);
+            return new GeneralResponse<>(300, "Failed", e.getMessage(), null);
+        }
     }
 
     public List<UserEntity> getAll(){
-        List<UserEntity> datas;
-        datas = repository.findAll();
+        List<UserEntity> datas = null;
+        try {
+            datas = repository.findAll();
+        }catch (Exception e){
+            System.out.println("failed get data UserEntity by id with error : " + e.getMessage());
+        }
         return datas;
     }
 

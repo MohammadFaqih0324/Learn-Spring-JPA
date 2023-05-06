@@ -2,7 +2,8 @@ package com.dev.java.learnspringjpa.services;
 
 import com.dev.java.learnspringjpa.entity.LessonEntity;
 import com.dev.java.learnspringjpa.entity.MajorEntity;
-import com.dev.java.learnspringjpa.entity.RoleEntity;
+import com.dev.java.learnspringjpa.model.request.LessonSaveRequest;
+import com.dev.java.learnspringjpa.model.response.GeneralResponse;
 import com.dev.java.learnspringjpa.repository.LessonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,11 +16,23 @@ import java.util.Optional;
 public class LessonService {
     @Autowired
     private LessonRepository repository;
+    @Autowired
+    private MajorService majorService;
 
-    public LessonEntity save(String name, Boolean isActived, MajorEntity major){
-        LessonEntity lesson = new LessonEntity(name, isActived, major);
-        LessonEntity response = repository.save(lesson);
-        return response;
+    public GeneralResponse<Object> save(LessonSaveRequest request){
+        try {
+            MajorEntity major = majorService.getById(request.getMajor());
+            if (major.getId() == null){
+                return new GeneralResponse<>(100, "Failed", "Failed save lesson, major not found", null);
+            }
+
+            LessonEntity lesson = new LessonEntity(request.getName(), request.getIsActived(), major);
+            repository.save(lesson);
+            return new GeneralResponse<>(200, "Success", "Success save lesson", lesson);
+        }catch (Exception e){
+            System.out.println("failed save lesson with error " + e);
+            return new GeneralResponse<>(300, "Failed", e.getMessage(), null);
+        }
     }
 
     public List<LessonEntity> getAll(){

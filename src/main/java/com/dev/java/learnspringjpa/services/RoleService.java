@@ -1,8 +1,8 @@
 package com.dev.java.learnspringjpa.services;
 
-import com.dev.java.learnspringjpa.entity.CourseEntity;
-import com.dev.java.learnspringjpa.entity.MajorEntity;
 import com.dev.java.learnspringjpa.entity.RoleEntity;
+import com.dev.java.learnspringjpa.model.request.RoleSaveRequest;
+import com.dev.java.learnspringjpa.model.response.GeneralResponse;
 import com.dev.java.learnspringjpa.repository.RoleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,15 +15,24 @@ public class RoleService {
     @Autowired
     private RoleRepository repository;
 
-    public RoleEntity save(String name, Boolean isActived){
-        RoleEntity role = new RoleEntity(name, isActived);
-        RoleEntity response = repository.save(role);
-        return response;
+    public GeneralResponse<Object> save(RoleSaveRequest request){
+        try {
+            RoleEntity role = new RoleEntity(request.getName(), request.getIsActived());
+            repository.save(role);
+            return new GeneralResponse<>(200, "Success", "Success save role", role);
+        }catch (Exception e){
+            System.out.println("failed save role with error " + e);
+            return new GeneralResponse<>(300, "Failed", e.getMessage(), null);
+        }
     }
 
     public List<RoleEntity> getAll(){
-        List<RoleEntity> datas;
-        datas = repository.findAll();
+        List<RoleEntity> datas = null;
+        try {
+            datas = repository.findAll();
+        }catch (Exception e){
+            System.out.println("failed get data RoleEntity by id with error : " + e.getMessage());
+        }
         return datas;
     }
 

@@ -1,7 +1,8 @@
 package com.dev.java.learnspringjpa.services;
 
 import com.dev.java.learnspringjpa.entity.AddressEntity;
-import com.dev.java.learnspringjpa.entity.StudentEntity;
+import com.dev.java.learnspringjpa.model.request.AddressSaveRequest;
+import com.dev.java.learnspringjpa.model.response.GeneralResponse;
 import com.dev.java.learnspringjpa.repository.AddressRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,15 +15,24 @@ public class AddressService {
     @Autowired
     private AddressRepository repository;
 
-    public AddressEntity save(String address){
-        AddressEntity addressEntity = new AddressEntity(address);
-        AddressEntity response =  repository.save(addressEntity);
-        return response;
+    public GeneralResponse<Object> save(AddressSaveRequest request){
+        try {
+            AddressEntity address = new AddressEntity(request.getAddress());
+            repository.save(address);
+            return new GeneralResponse<>(200, "Success", "Success save address", address);
+        }catch (Exception e){
+            System.out.println("failed save address with error " + e);
+            return new GeneralResponse<>(300, "Failed", e.getMessage(), null);
+        }
     }
 
     public List<AddressEntity> getAll(){
-        List<AddressEntity> datas;
-        datas = repository.findAll();
+        List<AddressEntity> datas = null;
+        try {
+            datas = repository.findAll();
+        }catch (Exception e){
+            System.out.println("failed get data AddressEntity by id with error : " + e.getMessage());
+        }
         return datas;
     }
 
@@ -38,7 +48,6 @@ public class AddressService {
         }
         return data;
     }
-
     public AddressEntity getByAddress(String address){
         AddressEntity data = new AddressEntity();
         try{

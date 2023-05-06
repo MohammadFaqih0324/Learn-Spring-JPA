@@ -4,9 +4,13 @@ import com.dev.java.learnspringjpa.entity.AddressEntity;
 import com.dev.java.learnspringjpa.entity.CourseEntity;
 import com.dev.java.learnspringjpa.entity.MajorEntity;
 import com.dev.java.learnspringjpa.entity.StudentEntity;
+import com.dev.java.learnspringjpa.model.request.StudentSaveRequest;
+import com.dev.java.learnspringjpa.model.response.GeneralResponse;
 import com.dev.java.learnspringjpa.repository.StudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -14,11 +18,40 @@ import java.util.Optional;
 public class StudentService {
     @Autowired
     private StudentRepository repository;
+    @Autowired
+    private MajorService majorService;
+    @Autowired
+    private AddressService addressService;
+    @Autowired
+    public CourseService courseService;
 
-    public StudentEntity save(String name, int age, MajorEntity majorEntity, AddressEntity address, List<CourseEntity> courses){
-        StudentEntity student = new StudentEntity(name, age, majorEntity, address, courses);
-        StudentEntity response = repository.save(student);
-        return response;
+    public GeneralResponse<Object> save(StudentSaveRequest request){
+        List<CourseEntity> courseEntities = new ArrayList<>();
+        try {
+            MajorEntity major = majorService.getById(request.getMajor());
+            if (major.getId() == null){
+                return new GeneralResponse<>(100, "Failed", "Failed save student, major not found", null);
+            }
+            AddressEntity address = addressService.getById(request.getAddress());
+            if (address.getId() == null){
+                return new GeneralResponse<>(100, "Failed", "Failed save student, address not found", null);
+            }
+
+            for (Long courseId : request.getCourse()) {
+                CourseEntity course = courseService.getById(courseId);
+                if (course.getId() == null){
+                    return new GeneralResponse<>(100, "Failed", "Failed save student, address not found", null);
+                }
+                courseEntities.add(course);
+            }
+
+            StudentEntity student = new StudentEntity(request.getName(), request.getAge(), major, address, courseEntities);
+            repository.save(student);
+            return new GeneralResponse<>(200, "Success", "Success save student", student);
+        }catch (Exception e){
+            System.out.println("failed save student with error " + e);
+            return new GeneralResponse<>(300, "Failed", e.getMessage(), null);
+        }
     }
 
     public List<StudentEntity> getAll(){

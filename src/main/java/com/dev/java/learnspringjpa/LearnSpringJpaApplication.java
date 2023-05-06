@@ -1,19 +1,15 @@
 package com.dev.java.learnspringjpa;
 
-import com.dev.java.learnspringjpa.entity.*;
-import com.dev.java.learnspringjpa.services.*;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
-import java.util.ArrayList;
-import java.util.List;
 
 @SpringBootApplication
 public class LearnSpringJpaApplication {
 
     public static void main(String[] args) {
         ApplicationContext context = SpringApplication.run(LearnSpringJpaApplication.class, args);
-
+        /*
         // ADDRESS
         AddressService addressService = context.getBean(AddressService.class);
         AddressEntity address1 = addressService.save("Karawang");
@@ -46,6 +42,7 @@ public class LearnSpringJpaApplication {
         studentService.save("Nabhan", 1, major3, address4, courseEntities);
 
         // LESSON
+
         LessonService lessonService = context.getBean(LessonService.class);
         lessonService.save("Introduction to Programming", true, major1);
         lessonService.save("Basic Java", true, major1);
@@ -61,6 +58,7 @@ public class LearnSpringJpaApplication {
         lessonService.save("Framework : Springboot and Spring Security", true, major3);
         lessonService.save("Basic : Html, Css and Javascript", true, major3);
         lessonService.save("Final Project", true, major3);
+
 
         // ROLE
         RoleService roleService = context.getBean(RoleService.class);
@@ -286,6 +284,8 @@ public class LearnSpringJpaApplication {
         // DELETE DATA BY ID
         UserEntity deleteUser = userService.delete(450L);
         System.out.println(deleteUser.getId() + " telah dihapus");
+
+         */
 
     }
 }
