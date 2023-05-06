@@ -40,7 +40,7 @@ public class StudentService {
             for (Long courseId : request.getCourse()) {
                 CourseEntity course = courseService.getById(courseId);
                 if (course.getId() == null){
-                    return new GeneralResponse<>(100, "Failed", "Failed save student, address not found", null);
+                    return new GeneralResponse<>(100, "Failed", "Failed save student, course not found", null);
                 }
                 courseEntities.add(course);
             }
@@ -55,8 +55,12 @@ public class StudentService {
     }
 
     public List<StudentEntity> getAll(){
-        List<StudentEntity> datas;
-        datas = repository.findAll();
+        List<StudentEntity> datas = null;
+        try {
+            datas = repository.findAll();
+        }catch (Exception e){
+            System.out.println("failed get data StudentEntity by id with error : " + e.getMessage());
+        }
         return datas;
     }
 

@@ -36,8 +36,12 @@ public class LessonService {
     }
 
     public List<LessonEntity> getAll(){
-        List<LessonEntity> datas;
-        datas = repository.findAll();
+        List<LessonEntity> datas = null;
+        try {
+            datas = repository.findAll();
+        }catch (Exception e){
+            System.out.println("failed get data LessonEntity by id with error : " + e.getMessage());
+        }
         return datas;
     }
 
