@@ -2,7 +2,8 @@ package com.dev.java.learnspringjpa.services;
 
 import com.dev.java.learnspringjpa.entity.LessonEntity;
 import com.dev.java.learnspringjpa.entity.MajorEntity;
-import com.dev.java.learnspringjpa.model.request.LessonSaveRequest;
+import com.dev.java.learnspringjpa.model.request.save.LessonSaveRequest;
+import com.dev.java.learnspringjpa.model.request.update.LessonUpdateRequest;
 import com.dev.java.learnspringjpa.model.response.GeneralResponse;
 import com.dev.java.learnspringjpa.repository.LessonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -64,26 +65,27 @@ public class LessonService {
            data = repository.findByName(name);
         }catch (Exception e){
             System.out.println("failed get data LessonEntity by name with error : " + e.getMessage());
-            e.printStackTrace();
         }
         return data;
     }
 
-    public LessonEntity update(Long id, LessonEntity lessonEntity){
-        LessonEntity data = new LessonEntity();
+    public GeneralResponse<Object> update(LessonUpdateRequest request){
         try {
-            LessonEntity dataFromDb = this.getById(id);
-            if (dataFromDb.getId() != null){
-                dataFromDb.setUpdatedBy(lessonEntity.getUpdatedBy());
-                dataFromDb.setName(lessonEntity.getName());
-                dataFromDb.setIsActived(lessonEntity.getIsActived());
-                dataFromDb.setMajor(lessonEntity.getMajor());
-                data = repository.save(dataFromDb);
+            LessonEntity lesson = this.getById(request.getId());
+            if (lesson.getId() != null){
+                MajorEntity major = majorService.getById(request.getMajor());
+                if (major.getId() == null){
+                    return new GeneralResponse<>(100, "Failed", "Failed update lesson, major not found", null);
+                }
+                lesson = new LessonEntity(lesson, request.getUpdateBy(), request.getName(), request.getIsActived(), major);
+                repository.save(lesson);
+                return new GeneralResponse<>(200, "Success", "Success update lesson", lesson);
             }
         }catch (Exception e){
             System.out.println("failed get data LessonEntity by name with error : " + e);
+            return new GeneralResponse<>(300, "Failed", e.getMessage(), null);
         }
-        return  data;
+        return new GeneralResponse<>(100, "Failed", "Failed update lesson, lesson with id : " + request.getId() + " is not found", null);
     }
 
     public LessonEntity delete(Long id){

@@ -24,8 +24,8 @@ public class BaseEntity {
     private void beforeSave(){
         this.createdDate = new Date();
         this.createdBy = "Admin";
-
     }
+
     @PreUpdate
     private void beforeUpdate(){
         this.updatedDate = new Date();

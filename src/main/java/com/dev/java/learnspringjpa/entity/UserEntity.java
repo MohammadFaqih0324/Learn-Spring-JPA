@@ -26,6 +26,17 @@ public class UserEntity extends BaseEntity {
         this.roles = roles;
     }
 
+    public UserEntity(UserEntity userEntity, String updateBy, String userName, String password, Boolean isActived, List<RoleEntity> roles) {
+        super.setId(userEntity.getId());
+        super.setCreatedDate(userEntity.getCreatedDate());
+        super.setCreatedBy(userEntity.getCreatedBy());
+        super.setUpdatedBy(userEntity.getUpdatedBy());
+        this.userName = userName;
+        this.password = password;
+        this.isActived = isActived;
+        this.roles = roles;
+    }
+
     public String toString(){
         return "id = " + this.getId() + " name = " + this.getUserName();
     }

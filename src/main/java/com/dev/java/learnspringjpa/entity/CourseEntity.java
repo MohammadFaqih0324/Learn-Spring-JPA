@@ -20,6 +20,15 @@ public class CourseEntity extends BaseEntity{
         this.isActived = isActived;
     }
 
+    public CourseEntity(CourseEntity courseEntity, String updateBy, String name, Boolean isActived) {
+        super.setId(courseEntity.getId());
+        super.setCreatedDate(courseEntity.getCreatedDate());
+        super.setCreatedBy(courseEntity.getCreatedBy());
+        super.setUpdatedBy(courseEntity.getUpdatedBy());
+        this.name = name;
+        this.isActived = isActived;
+    }
+
     public String toString(){
         return "id = " + this.getId() + " name = " + this.getName();
     }

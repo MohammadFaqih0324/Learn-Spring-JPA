@@ -12,6 +12,14 @@ public class AddressEntity extends BaseEntity{
         this.address = address;
     }
 
+    public AddressEntity(AddressEntity addressEntity, String updateBy, String address){
+        super.setId(addressEntity.getId());
+        super.setCreatedDate(addressEntity.getCreatedDate());
+        super.setCreatedBy(addressEntity.getCreatedBy());
+        super.setUpdatedBy(addressEntity.getUpdatedBy());
+        this.address = address;
+    }
+
     public String toString(){
         return "id = " + this.getId() + " name = " + this.getAddress();
     }

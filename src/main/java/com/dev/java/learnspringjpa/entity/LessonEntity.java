@@ -23,6 +23,16 @@ public class LessonEntity extends BaseEntity{
         this.major = major;
     }
 
+    public LessonEntity(LessonEntity lessonEntity, String updateBy, String name, Boolean isActived, MajorEntity major) {
+        super.setId(lessonEntity.getId());
+        super.setCreatedDate(lessonEntity.getCreatedDate());
+        super.setCreatedBy(lessonEntity.getCreatedBy());
+        super.setUpdatedBy(lessonEntity.getUpdatedBy());
+        this.name = name;
+        this.isActived = isActived;
+        this.major = major;
+    }
+
     public String toString(){
         return "id = " + this.getId() + " name = " + this.getName();
     }

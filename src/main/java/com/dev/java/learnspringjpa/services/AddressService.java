@@ -1,7 +1,8 @@
 package com.dev.java.learnspringjpa.services;
 
 import com.dev.java.learnspringjpa.entity.AddressEntity;
-import com.dev.java.learnspringjpa.model.request.AddressSaveRequest;
+import com.dev.java.learnspringjpa.model.request.save.AddressSaveRequest;
+import com.dev.java.learnspringjpa.model.request.update.AddressUpdateRequest;
 import com.dev.java.learnspringjpa.model.response.GeneralResponse;
 import com.dev.java.learnspringjpa.repository.AddressRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -61,19 +62,19 @@ public class AddressService {
         return data;
     }
 
-    public AddressEntity update(Long id, AddressEntity addressEntity){
-        AddressEntity data = new AddressEntity();
+    public GeneralResponse<Object> update(AddressUpdateRequest request){
         try {
-            AddressEntity dataFromDb = this.getById(id);
-            if (dataFromDb.getId() != null) {
-                dataFromDb.setUpdatedBy(addressEntity.getUpdatedBy());
-                dataFromDb.setAddress(addressEntity.getAddress());
-                data = repository.save(dataFromDb);
+            AddressEntity address = this.getById(request.getId());
+            if (address.getId() != null) {
+                address = new AddressEntity(address, request.getUpdateBy(), request.getAddress());
+                repository.save(address);
+                return new GeneralResponse<>(200, "Success", "Success update address", address);
             }
         }catch (Exception e) {
-            System.out.println("failed get data AddressEntity by name with error : " + e);
+            System.out.println("failed update address with error : " + e);
+            return new GeneralResponse<>(300, "Failed", e.getMessage(), null);
         }
-        return data;
+        return new GeneralResponse<>(100, "Failed", "Failed update address, address with id : " + request.getId() + " is not found", null);
     }
 
     public AddressEntity delete(Long id){

@@ -1,9 +1,8 @@
-package com.dev.java.learnspringjpa.model.request;
+package com.dev.java.learnspringjpa.model.request.save;
 
 import lombok.Data;
 
 import java.util.List;
-
 @Data
 public class UserSaveRequest {
     private String userName;

@@ -1,12 +1,14 @@
 package com.dev.java.learnspringjpa.services;
 
 import com.dev.java.learnspringjpa.entity.MajorEntity;
-import com.dev.java.learnspringjpa.model.request.MajorSaveRequest;
+import com.dev.java.learnspringjpa.model.request.save.MajorSaveRequest;
+import com.dev.java.learnspringjpa.model.request.update.MajorUpdateRequest;
 import com.dev.java.learnspringjpa.model.response.GeneralResponse;
 import com.dev.java.learnspringjpa.repository.MajorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -27,7 +29,7 @@ public class MajorService {
     }
 
     public List<MajorEntity> getAll(){
-        List<MajorEntity> datas = null;
+        List<MajorEntity> datas = new ArrayList<>();
         try {
             datas = repository.findAll();
         }catch (Exception e){
@@ -62,20 +64,19 @@ public class MajorService {
         return data;
     }
 
-    public MajorEntity update(Long id, MajorEntity majorEntity){
-        MajorEntity data = new MajorEntity();
+    public GeneralResponse<Object> update(MajorUpdateRequest request){
         try {
-            MajorEntity dataFromDb = this.getById(id);
-            if (dataFromDb.getId() != null){
-                dataFromDb.setUpdatedBy(majorEntity.getUpdatedBy());
-                dataFromDb.setName(majorEntity.getName());
-                dataFromDb.setIsActived(majorEntity.getIsActived());
-                data = repository.save(dataFromDb);
+            MajorEntity major = this.getById(request.getId());
+            if (major.getId() != null){
+                major = new MajorEntity(major, request.getUpdateBy(), request.getName(), request.getIsActived());
+                repository.save(major);
+                return new GeneralResponse<>(200, "Success", "Success update major", major);
             }
         }catch (Exception e){
             System.out.println("failed get data MajorEntity by name with error : " + e);
+            return new GeneralResponse<>(300, "Failed", e.getMessage(), null);
         }
-        return data;
+        return new GeneralResponse<>(100, "Failed", "Failed update major, major with id : " + request.getId() + " is not found", null);
     }
 
     public MajorEntity delete(Long id){

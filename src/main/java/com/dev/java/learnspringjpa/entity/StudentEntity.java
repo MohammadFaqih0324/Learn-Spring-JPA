@@ -32,6 +32,18 @@ public class StudentEntity extends BaseEntity {
         this.courses = courses;
     }
 
+    public StudentEntity(StudentEntity studentEntity, String updateBy, String name, int age, MajorEntity major, AddressEntity address, List<CourseEntity> courses) {
+        super.setId(studentEntity.getId());
+        super.setCreatedDate(studentEntity.getCreatedDate());
+        super.setCreatedBy(studentEntity.getCreatedBy());
+        super.setUpdatedBy(studentEntity.getUpdatedBy());
+        this.name = name;
+        this.age = age;
+        this.major = major;
+        this.address = address;
+        this.courses = courses;
+    }
+
     public String toString(){
         return "id = " + this.getId() + " name = " + this.getName();
     }

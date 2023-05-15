@@ -1,12 +1,14 @@
 package com.dev.java.learnspringjpa.services;
 
 import com.dev.java.learnspringjpa.entity.CourseEntity;
-import com.dev.java.learnspringjpa.model.request.CourseSaveRequest;
+import com.dev.java.learnspringjpa.model.request.save.CourseSaveRequest;
+import com.dev.java.learnspringjpa.model.request.update.CourseUpdateRequest;
 import com.dev.java.learnspringjpa.model.response.GeneralResponse;
 import com.dev.java.learnspringjpa.repository.CourseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -27,7 +29,7 @@ public class CourseService {
     }
 
     public List<CourseEntity> getAll(){
-        List<CourseEntity> datas = null;
+        List<CourseEntity> datas = new ArrayList<>();
         try{
             datas = repository.findAll();
         }catch (Exception e){
@@ -62,20 +64,19 @@ public class CourseService {
         return data;
     }
 
-    public CourseEntity update(Long id, CourseEntity courseEntity){
-        CourseEntity data = new CourseEntity();
+    public GeneralResponse<Object> update(CourseUpdateRequest request){
         try {
-            CourseEntity dataFromDb = this.getById(id);
-            if (dataFromDb.getId() != null){
-                dataFromDb.setUpdatedBy(courseEntity.getUpdatedBy());
-                dataFromDb.setName(courseEntity.getName());
-                dataFromDb.setIsActived(courseEntity.getIsActived());
-                data = repository.save(dataFromDb);
+            CourseEntity course = this.getById(request.getId());
+            if (course.getId() != null){
+                course = new CourseEntity(course, request.getUpdateBy(), request.getName(), request.getIsActived());
+                repository.save(course);
+                return new GeneralResponse<>(200, "Success", "Success update course", course);
             }
         }catch (Exception e){
             System.out.println("failed get data CourseEntity by name with error : " + e);
+            return new GeneralResponse<>(300, "Failed", e.getMessage(), null);
         }
-        return data;
+        return new GeneralResponse<>(100, "Failed", "Failed update course, course with id : " + request.getId() + " is not found", null);
     }
 
     public CourseEntity delete(Long id){

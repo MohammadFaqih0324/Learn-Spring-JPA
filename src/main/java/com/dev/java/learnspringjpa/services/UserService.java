@@ -1,7 +1,8 @@
 package com.dev.java.learnspringjpa.services;
 
 import com.dev.java.learnspringjpa.entity.*;
-import com.dev.java.learnspringjpa.model.request.UserSaveRequest;
+import com.dev.java.learnspringjpa.model.request.save.UserSaveRequest;
+import com.dev.java.learnspringjpa.model.request.update.UserUpdateRequest;
 import com.dev.java.learnspringjpa.model.response.GeneralResponse;
 import com.dev.java.learnspringjpa.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,7 +40,7 @@ public class UserService {
     }
 
     public List<UserEntity> getAll(){
-        List<UserEntity> datas = null;
+        List<UserEntity> datas = new ArrayList<>();
         try {
             datas = repository.findAll();
         }catch (Exception e){
@@ -74,22 +75,28 @@ public class UserService {
         return data;
     }
 
-    public UserEntity update(Long id, UserEntity userEntity){
-        UserEntity data = new UserEntity();
+    public GeneralResponse<Object> update(UserUpdateRequest request){
+        List<RoleEntity> roleEntities = new ArrayList<>();
         try {
-            UserEntity dataFromDb = this.getById(id);
-            if (dataFromDb.getId() != null){
-                dataFromDb.setUpdatedBy(userEntity.getUpdatedBy());
-                dataFromDb.setUserName(userEntity.getUserName());
-                dataFromDb.setPassword(userEntity.getPassword());
-                dataFromDb.setIsActived(userEntity.getIsActived());
-                dataFromDb.setRoles(userEntity.getRoles());
-                data = repository.save(dataFromDb);
+            UserEntity user = this.getById(request.getId());
+            if (user.getId() != null){
+            for (Long roleId : request.getRole()){
+                RoleEntity role = roleService.getById(roleId);
+                if (role.getId() == null){
+                    return new GeneralResponse<>(100, "Failed", "Failed update user, role with id : " + roleId + " not found", null);
+                }
+                roleEntities.add(role);
+            }
+
+            user = new UserEntity(user, request.getUpdateBy(), request.getUserName(), request.getPassword(), request.getIsActived(), roleEntities);
+            repository.save(user);
+                return new GeneralResponse<>(200, "Success", "Success update user", user);
             }
         }catch (Exception e){
             System.out.println("failed get data UserEntity by name with error : " + e);
+            return new GeneralResponse<>(300, "Failed", e.getMessage(), null);
         }
-        return data;
+        return new GeneralResponse<>(100, "Failed", "Failed update user, user with id : " + request.getId() + " is not found", null);
     }
 
     public UserEntity delete(Long id){

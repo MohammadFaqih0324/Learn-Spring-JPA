@@ -1,7 +1,8 @@
 package com.dev.java.learnspringjpa.services;
 
 import com.dev.java.learnspringjpa.entity.RoleEntity;
-import com.dev.java.learnspringjpa.model.request.RoleSaveRequest;
+import com.dev.java.learnspringjpa.model.request.save.RoleSaveRequest;
+import com.dev.java.learnspringjpa.model.request.update.RoleUpdateRequest;
 import com.dev.java.learnspringjpa.model.response.GeneralResponse;
 import com.dev.java.learnspringjpa.repository.RoleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -62,20 +63,19 @@ public class RoleService {
         return data;
     }
 
-    public RoleEntity update(Long id, RoleEntity roleEntity){
-        RoleEntity data = new RoleEntity();
+    public GeneralResponse<Object> update(RoleUpdateRequest request){
         try {
-            RoleEntity dataFromDb = this.getById(id);
-            if (dataFromDb.getId() != null){
-                dataFromDb.setUpdatedBy(roleEntity.getUpdatedBy());
-                dataFromDb.setName(roleEntity.getName());
-                dataFromDb.setIsActived(roleEntity.getIsActived());
-                data = repository.save(dataFromDb);
+            RoleEntity role = this.getById(request.getId());
+            if (role.getId() != null){
+                role = new RoleEntity(role, request.getUpdateBy(), request.getName(), request.getIsActived());
+                repository.save(role);
+                return new GeneralResponse<>(200, "Success", "Success update role", role);
             }
         }catch (Exception e){
             System.out.println("failed get data RoleEntity by name with error : " + e);
+            return new GeneralResponse<>(300, "Failed", e.getMessage(), null);
         }
-        return data;
+        return new GeneralResponse<>(100, "Failed", "Failed update role, role with id : " + request.getId() + " is not found", null);
     }
 
     public RoleEntity delete(Long id){

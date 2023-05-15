@@ -16,6 +16,15 @@ public class RoleEntity extends BaseEntity{
         this.isActived = isActived;
     }
 
+    public RoleEntity(RoleEntity roleEntity, String updateBy, String name, Boolean isActived) {
+        super.setId(roleEntity.getId());
+        super.setCreatedDate(roleEntity.getCreatedDate());
+        super.setCreatedBy(roleEntity.getCreatedBy());
+        super.setUpdatedBy(roleEntity.getUpdatedBy());
+        this.name = name;
+        this.isActived = isActived;
+    }
+
     public String toString(){
         return "id = " + this.getId() + " name = " + this.getName();
     }

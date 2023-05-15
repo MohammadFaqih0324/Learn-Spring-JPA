@@ -1,12 +1,10 @@
 package com.dev.java.learnspringjpa.controller;
 
 import com.dev.java.learnspringjpa.entity.LessonEntity;
-import com.dev.java.learnspringjpa.entity.MajorEntity;
-import com.dev.java.learnspringjpa.model.request.LessonSaveRequest;
-import com.dev.java.learnspringjpa.model.request.MajorSaveRequest;
+import com.dev.java.learnspringjpa.model.request.save.LessonSaveRequest;
+import com.dev.java.learnspringjpa.model.request.update.LessonUpdateRequest;
 import com.dev.java.learnspringjpa.model.response.GeneralResponse;
 import com.dev.java.learnspringjpa.services.LessonService;
-import com.dev.java.learnspringjpa.services.MajorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,14 +17,41 @@ public class LessonController {
     private LessonService lessonService;
 
     @GetMapping("/get-all")
-    public GeneralResponse getAll(){
+    public GeneralResponse<Object> getAll(){
         List<LessonEntity> datas = lessonService.getAll();
-        return new GeneralResponse(200, "Success", "Success get data lesson", datas);
+        return new GeneralResponse<>(200, "Success", "Success get data lesson", datas);
     }
 
     @PostMapping("/save")
-    public GeneralResponse save(@RequestBody LessonSaveRequest request){
-        GeneralResponse response = lessonService.save(request);
-        return response;
+    public GeneralResponse<Object> save(@RequestBody LessonSaveRequest request){
+        return lessonService.save(request);
+    }
+
+    @GetMapping("/get-by-id")
+    public GeneralResponse<Object> getById(@RequestParam Long id){
+        LessonEntity lesson = lessonService.getById(id);
+        if (lesson.getId() != null){
+            return new GeneralResponse<>(200, "Success", "Success get data lesson", lesson);
+        }
+        return new GeneralResponse<>(100, "Failed", "Lesson with id " + id + " is not found!", null);
+    }
+
+    @GetMapping("/get-by-name")
+    public List<LessonEntity> getByName(@RequestParam String name){
+        return lessonService.getByName(name);
+    }
+
+    @PutMapping("/update")
+    public GeneralResponse<Object> update(@RequestBody LessonUpdateRequest request){
+        return lessonService.update(request);
+    }
+
+    @DeleteMapping("/delete-by-id")
+    public GeneralResponse<Object> delete(@RequestParam Long id){
+        LessonEntity lesson = lessonService.delete(id);
+        if (lesson.getId() != null){
+            return new GeneralResponse<>(200, "Success", "Success delete data lesson", lesson);
+        }
+        return new GeneralResponse<>(100, "Failed", "Lesson with id " + id + " is not found!", null);
     }
 }
