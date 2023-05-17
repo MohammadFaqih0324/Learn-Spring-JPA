@@ -62,13 +62,10 @@ public class UserService {
         return data;
     }
 
-    public UserEntity getByUserName(String userName){
-        UserEntity data = new UserEntity();
+    public List<UserEntity> getByUserName(String userName){
+        List<UserEntity> data = new ArrayList<>();
         try{
-            Optional<UserEntity> optional = repository.findByUserName(userName);
-            if (optional.isPresent()){
-                data = optional.get();
-            }
+            data = repository.findByUserName(userName);
         }catch (Exception e){
             System.out.println("failed get data MajorEntity by username with error : " + e.getMessage());
         }

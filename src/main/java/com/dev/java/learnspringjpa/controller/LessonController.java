@@ -37,8 +37,12 @@ public class LessonController {
     }
 
     @GetMapping("/get-by-name")
-    public List<LessonEntity> getByName(@RequestParam String name){
-        return lessonService.getByName(name);
+    public GeneralResponse<Object> getByName(@RequestParam String name){
+        List<LessonEntity> lesson = lessonService.getByName(name);
+        if (lesson.getClass() != null){
+            return new GeneralResponse<>(200, "Success", "Success get data lesson", lesson);
+        }
+        return new GeneralResponse<>(100, "Failed", "Lesson with name " + name + " is not found!", null);
     }
 
     @PutMapping("/update")

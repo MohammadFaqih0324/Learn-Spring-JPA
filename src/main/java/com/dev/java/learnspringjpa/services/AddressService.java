@@ -8,6 +8,7 @@ import com.dev.java.learnspringjpa.repository.AddressRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -28,7 +29,7 @@ public class AddressService {
     }
 
     public List<AddressEntity> getAll(){
-        List<AddressEntity> datas = null;
+        List<AddressEntity> datas = new ArrayList<>();
         try {
             datas = repository.findAll();
         }catch (Exception e){

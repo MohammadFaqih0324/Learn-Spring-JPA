@@ -27,7 +27,7 @@ public class LessonEntity extends BaseEntity{
         super.setId(lessonEntity.getId());
         super.setCreatedDate(lessonEntity.getCreatedDate());
         super.setCreatedBy(lessonEntity.getCreatedBy());
-        super.setUpdatedBy(lessonEntity.getUpdatedBy());
+        super.setUpdatedBy(updateBy);
         this.name = name;
         this.isActived = isActived;
         this.major = major;

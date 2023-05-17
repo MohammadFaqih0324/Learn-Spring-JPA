@@ -44,7 +44,7 @@ public class CourseController {
     public GeneralResponse<Object> getByName(@RequestParam String name){
         CourseEntity course = courseService.getByName(name);
         if (course.getId() != null){
-            return new GeneralResponse<>(200, "Success", "Success get data course", course);
+            return new GeneralResponse<>(200, "Success", "Success get data by name course", course);
         }
         return new GeneralResponse<>(100, "Failed", "Course with name " + name + " is not found!", null);
     }

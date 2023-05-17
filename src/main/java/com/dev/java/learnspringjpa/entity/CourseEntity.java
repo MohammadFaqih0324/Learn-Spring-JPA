@@ -24,7 +24,7 @@ public class CourseEntity extends BaseEntity{
         super.setId(courseEntity.getId());
         super.setCreatedDate(courseEntity.getCreatedDate());
         super.setCreatedBy(courseEntity.getCreatedBy());
-        super.setUpdatedBy(courseEntity.getUpdatedBy());
+        super.setUpdatedBy(updateBy);
         this.name = name;
         this.isActived = isActived;
     }

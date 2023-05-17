@@ -20,7 +20,7 @@ public class RoleEntity extends BaseEntity{
         super.setId(roleEntity.getId());
         super.setCreatedDate(roleEntity.getCreatedDate());
         super.setCreatedBy(roleEntity.getCreatedBy());
-        super.setUpdatedBy(roleEntity.getUpdatedBy());
+        super.setUpdatedBy(updateBy);
         this.name = name;
         this.isActived = isActived;
     }

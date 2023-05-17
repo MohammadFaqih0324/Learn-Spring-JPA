@@ -19,7 +19,7 @@ public class MajorEntity extends BaseEntity{
         super.setId(majorEntity.getId());
         super.setCreatedDate(majorEntity.getCreatedDate());
         super.setCreatedBy(majorEntity.getCreatedBy());
-        super.setUpdatedBy(majorEntity.getUpdatedBy());
+        super.setUpdatedBy(updateBy);
         this.name = name;
         this.isActived = isActived;
     }

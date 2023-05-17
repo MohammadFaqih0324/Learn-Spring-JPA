@@ -30,7 +30,7 @@ public class UserEntity extends BaseEntity {
         super.setId(userEntity.getId());
         super.setCreatedDate(userEntity.getCreatedDate());
         super.setCreatedBy(userEntity.getCreatedBy());
-        super.setUpdatedBy(userEntity.getUpdatedBy());
+        super.setUpdatedBy(updateBy);
         this.userName = userName;
         this.password = password;
         this.isActived = isActived;

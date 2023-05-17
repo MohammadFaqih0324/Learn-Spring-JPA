@@ -8,6 +8,7 @@ import com.dev.java.learnspringjpa.repository.RoleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -28,7 +29,7 @@ public class RoleService {
     }
 
     public List<RoleEntity> getAll(){
-        List<RoleEntity> datas = null;
+        List<RoleEntity> datas = new ArrayList<>();
         try {
             datas = repository.findAll();
         }catch (Exception e){

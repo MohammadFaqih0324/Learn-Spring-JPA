@@ -41,8 +41,8 @@ public class UserController {
 
     @GetMapping("/get-by-name")
     public GeneralResponse<Object> getByUserName(@RequestParam String userName){
-        UserEntity user = userService.getByUserName(userName);
-        if (user.getId() != null){
+        List<UserEntity> user = userService.getByUserName(userName);
+        if (user.getClass() != null){
             return new GeneralResponse<>(200, "Success", "Success get data user", user);
         }
         return new GeneralResponse<>(100, "Failed", "User with name " + userName + " is not found!", null);

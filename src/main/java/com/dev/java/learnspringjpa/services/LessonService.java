@@ -37,7 +37,7 @@ public class LessonService {
     }
 
     public List<LessonEntity> getAll(){
-        List<LessonEntity> datas = null;
+        List<LessonEntity> datas = new ArrayList<>();
         try {
             datas = repository.findAll();
         }catch (Exception e){

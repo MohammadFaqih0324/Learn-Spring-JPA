@@ -36,7 +36,7 @@ public class StudentEntity extends BaseEntity {
         super.setId(studentEntity.getId());
         super.setCreatedDate(studentEntity.getCreatedDate());
         super.setCreatedBy(studentEntity.getCreatedBy());
-        super.setUpdatedBy(studentEntity.getUpdatedBy());
+        super.setUpdatedBy(updateBy);
         this.name = name;
         this.age = age;
         this.major = major;

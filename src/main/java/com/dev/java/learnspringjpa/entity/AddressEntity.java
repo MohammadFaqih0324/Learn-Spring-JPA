@@ -16,7 +16,7 @@ public class AddressEntity extends BaseEntity{
         super.setId(addressEntity.getId());
         super.setCreatedDate(addressEntity.getCreatedDate());
         super.setCreatedBy(addressEntity.getCreatedBy());
-        super.setUpdatedBy(addressEntity.getUpdatedBy());
+        super.setUpdatedBy(updateBy);
         this.address = address;
     }
 
